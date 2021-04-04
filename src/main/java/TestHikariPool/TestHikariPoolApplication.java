@@ -39,7 +39,7 @@ public class TestHikariPoolApplication {
 		hikariConfig.setPassword("postgres");
 		hikariConfig.setPoolName("HikariTestPool");
 
-		for (int i = 1; i < 30; i++) {
+		for (int i = 1; i <= 20; i++) {
 
 			logger.info("start test pool: {}", i);
 
@@ -67,7 +67,9 @@ public class TestHikariPoolApplication {
 			statement.execute("select count(*) count from balance;");
 			ResultSet resultSet= statement.getResultSet();
 			resultSet.next();
-			logger.info("{} row write", resultSet.getInt("count"));
+			if (resultSet.getInt("count") != SaveService.limit) {
+				logger.error("{} row write", resultSet.getInt("count"));
+			}
 			statement.close();
 			statement = connection.createStatement();
 			statement.execute("drop table if exists balance;");

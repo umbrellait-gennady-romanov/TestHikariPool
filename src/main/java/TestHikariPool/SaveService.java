@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class SaveService {
-
+    public final static long limit = 5_000_000;
     private DataSource dataSource;
 
     public SaveService(DataSource dataSource) {
@@ -27,7 +27,7 @@ public class SaveService {
 
         StringBuilder sqlBuilder = new StringBuilder().append(sqlBalance);
 
-        for (int row = 1; row <= 1_000_000; row++) {
+        for (int row = 1; row <= limit; row++) {
 
             sqlBuilder.append("(")
                     .append("'" + "order_ids_order_id_promotions" + row + "'").append(", ")
@@ -44,7 +44,7 @@ public class SaveService {
                 executorService.execute(new SaveWorker(sqlBuilder.toString(), dataSource));
                 sqlBuilder.delete(0, sqlBuilder.length());
                 sqlBuilder.append(sqlBalance);
-                if (row == 1_000_000) {
+                if (row == limit) {
                     executorService.shutdown();
                     executorService.awaitTermination(Integer.MAX_VALUE, TimeUnit.DAYS);
                 }
