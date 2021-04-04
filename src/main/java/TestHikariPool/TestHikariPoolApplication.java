@@ -17,7 +17,25 @@ import java.util.List;
 
 @SpringBootApplication
 public class TestHikariPoolApplication {
-	private static Logger logger = LoggerFactory.getLogger(TestHikariPoolApplication.class);
+	private static final Logger logger = LoggerFactory.getLogger(TestHikariPoolApplication.class);
+//
+//	private static final String url = "jdbc:postgresql://localhost:5432/test";
+//	private static final String user = "postgres";
+//	private static final String password = "postgres";
+
+	private static String url;
+	private static String user;
+	private static String password;
+
+	@Value("${postgres.url}")
+	private void setUrl(String url){TestHikariPoolApplication.url = url;}
+	@Value("${postgres.user}")
+	private void setUser(String user){TestHikariPoolApplication.user = user;}
+	@Value("${postgres.password}")
+	private void setPassword(String password){TestHikariPoolApplication.password = password;}
+
+
+
 
 	static final String sqlCreateTable = "create table if not exists balance " +
 			"						 (id bigserial,\n" +
@@ -29,12 +47,6 @@ public class TestHikariPoolApplication {
 			"                         customer_discount_card_number varchar(255),\n" +
 			"                         primary key (id));";
 
-	@Value("postgres.url")
-	private static String url;
-	@Value("postgres.user")
-	private static String user;
-	@Value("postgres.password")
-	private static String password;
 
 	public static void main(String[] args) throws SQLException, InterruptedException {
 		SpringApplication.run(TestHikariPoolApplication.class, args);
