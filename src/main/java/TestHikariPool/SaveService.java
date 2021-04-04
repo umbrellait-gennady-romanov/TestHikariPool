@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 public class SaveService {
-    public final static long limit = 100_000;
+    public final static long limit = 3_000_000;
     private DataSource dataSource;
 
     public SaveService(DataSource dataSource) {

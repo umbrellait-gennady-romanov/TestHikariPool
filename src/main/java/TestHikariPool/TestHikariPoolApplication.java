@@ -18,10 +18,6 @@ import java.util.List;
 @SpringBootApplication
 public class TestHikariPoolApplication {
 	private static final Logger logger = LoggerFactory.getLogger(TestHikariPoolApplication.class);
-//
-//	private static final String url = "jdbc:postgresql://localhost:5432/test";
-//	private static final String user = "postgres";
-//	private static final String password = "postgres";
 
 	private static String url;
 	private static String user;
@@ -33,9 +29,6 @@ public class TestHikariPoolApplication {
 	private void setUser(String user){TestHikariPoolApplication.user = user;}
 	@Value("${postgres.password}")
 	private void setPassword(String password){TestHikariPoolApplication.password = password;}
-
-
-
 
 	static final String sqlCreateTable = "create table if not exists balance " +
 			"						 (id bigserial,\n" +
@@ -80,7 +73,7 @@ public class TestHikariPoolApplication {
 			SaveService saveService = new SaveService(hikariDataSource);
 			saveService.downloadAndSaveBalance();
 			long time = (System.currentTimeMillis() - startTime) / 1_000;
-			list.add("Time for pool:" + i + " - " + time + " second" );
+			list.add("Time for size pool:" + i + " - " + time + " second" );
 
 			connection =  hikariDataSource.getConnection();
 			statement = connection.createStatement();
