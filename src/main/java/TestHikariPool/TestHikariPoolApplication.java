@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -28,15 +29,22 @@ public class TestHikariPoolApplication {
 			"                         customer_discount_card_number varchar(255),\n" +
 			"                         primary key (id));";
 
+	@Value("postgres.url")
+	private static String url;
+	@Value("postgres.user")
+	private static String user;
+	@Value("postgres.password")
+	private static String password;
+
 	public static void main(String[] args) throws SQLException, InterruptedException {
 		SpringApplication.run(TestHikariPoolApplication.class, args);
 
 		List<String> list = new ArrayList<>();
 
 		HikariConfig hikariConfig = new HikariConfig();
-		hikariConfig.setJdbcUrl("jdbc:postgresql://localhost:5432/test");
-		hikariConfig.setUsername("postgres");
-		hikariConfig.setPassword("postgres");
+		hikariConfig.setJdbcUrl(url);
+		hikariConfig.setUsername(user);
+		hikariConfig.setPassword(password);
 		hikariConfig.setPoolName("HikariTestPool");
 
 		for (int i = 1; i <= 20; i++) {
