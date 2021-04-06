@@ -51,6 +51,7 @@ public class TestHikariPoolApplication {
 		hikariConfig.setUsername(user);
 		hikariConfig.setPassword(password);
 		hikariConfig.setPoolName("HikariTestPool");
+		hikariConfig.setConnectionTimeout(600_000);
 
 		for (int i = 1; i <= 20; i++) {
 
